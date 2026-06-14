@@ -1,0 +1,27 @@
+조회는 한번에조회할테이블이많은데 만약 1:n이면 dto에 list를선언해서따로따로 쿼리짜기
+
+동기는 페이지네이션
+비동기는 더보기 무한스크롤
+
+오늘할거 - 야멜파일을 깃이그노어에 넣기 왜? 오늘배운 메일 패스워드...
+
+auth: 반드시 true
+starttls 는 너 인터넷에서 데이터전송할거야? 그럼 이 보안관련 프로토콜 따라
+		이메일가져와서 어쩌고저쩌고...하는 프로토콜
+true 로 하면 저 프로토콜 따라서 암호화 어쩌고저쩌고...
+auth 는 사용자인증(username, password 확인)
+starttls 는(transport layer security) 
+지금은 메일내용이 네트워크상에서 암호화되어 전송하는 규칙/약속 = tls
+=>보안장치
+
+mail 은 mapper도없고 DAO도없으니까 바로 service만들기
+
+static 은 서버가 실행되면 종료 될 때까지 계속 메모리에 올라가 있음
+=> @PostConstruct 어노테이션 사용
+static block은 spring이 bean container 등록 하기도 전에 실행됨
+근데 우리가 원하는건 준비 됐을때 실행되는것
+spring 이 모든 준비를 끝내고 나서 딱 한번 동작.
+
+consumes는 받아올거. 내가받아올거는 제이슨이지.
+
+

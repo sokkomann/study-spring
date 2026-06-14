@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EX07</title>
+</head>
+<body>
+
+<!-- th태그는 그냥 타임리프를 쓰기위한 태그.화면에선 의미x -->
+<th:block th:each="data:${arData}">
+    <h1 th:text="${data}"></h1>
+</th:block>
+<!--<div th:each="data:${arData}">-->
+<!--    <h1 th:text="${data}"></h1>-->
+<!--</div>-->
+</body>
+</html>

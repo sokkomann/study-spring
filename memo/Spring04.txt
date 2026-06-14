@@ -1,0 +1,47 @@
+테이블 확인(없으면 만들기)
+VO, DTO
+mapper.xml
+Mapper.java(interface)
+통합 테스트
+DAO.java(repository)
+Service.java
+통합 테스트
+Controller.java
+HTML
+
+
+RESTAPI ->
+mapper.xml
+Mapper.java
+테스트
+DAO.java
+Service.java
+테스트
+Controller.java
+service.js
+layout.js
+event.js
+HTML
+
+
+
+3-tier
+	스프링 프로젝트는 3-tier 방식으로 설계된다.
+
+	▶ Presentation Tier - 화면 계층 
+		화면에 보여주는 기술을 사용하는 영역(Controller)
+
+	▶ Business Tier - 비지니스 계층
+		순수한 비지니스 로직을 담고 있는 영역(Service)
+
+	▶ Persistence Tier - 영속 계층
+		데이터를 어떤 방식으로 보관하고, 사용하는가에 대한 설계가 들어가는 영역(Mapper)
+
+3-tier의 목적
+	각 영역은 독립적으로 설계되어 나중에 특정 기술이 변하더라도 필요한 부분을
+	부품처럼 쉽게 교환할 수 있게 하자는 방식이다.
+
+3-tier의 구조
+	Presentation ↔ Business ↔ Persistence ↔ DBMS
+	     ↑	           ↑       ↑	      	↑
+	Controller        Service    Repository    Mapper

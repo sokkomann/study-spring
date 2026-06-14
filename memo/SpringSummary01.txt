@@ -1,0 +1,91 @@
+DTO를 받는 이유:
+
+화면 (회원가입 폼)
+    ↓
+사용자가 입력한 데이터:
+- userEmail
+- userPassword
+- userPhone
+- userName
+- userIntro
+- userRegType  ← 화면에서 온 데이터
+    ↓
+Controller가 그대로 DTO로 받음
+    ↓
+Mapper까지 DTO 그대로 전달
+
+VO를 쓰면 안 되는 이유:
+java// VO는 Setter가 없음!
+UserVO userVO = new UserVO();
+userVO.setUserEmail("...");  // Setter 없어서 불가능!
+
+// DTO는 Setter 있음!
+UserDTO userDTO = new UserDTO();
+userDTO.setUserEmail("...");  // 가능!
+
+OAuthVO는 tbl_auth에 저장할 딱 필요한 데이터만 가진 단순한 객체. Setter가 필요 없고 변경도 없으니 VO로 충분함
+
+Optional<UserDTO> selectByEmail(String userEmail);
+
+
+DTO를 반환하는 이유:
+
+사용 목적: 이메일 중복 체크
+    
+Service에서:
+public boolean checkEmail(String email) {
+    return userMapper.selectByEmail(email).isEmpty();
+    //                                      ↑
+    //                          존재 여부만 확인하고 버림!
+}
+
+핵심: 조회 결과를 잠깐 쓰고 버리는 용도임. 세션에 저장하거나 오래 유지할 필요가 없으니 DTO로 충분!
+
+Optional<UserVO> selectUserForLogin(UserDTO userDTO);
+
+
+DTO를 받고 VO를 반환하는 이유:
+
+DTO를 받는 이유 (입력):
+
+화면 (로그인 폼)
+    ↓
+사용자가 입력: email + password
+    ↓
+Controller가 UserDTO로 받음
+    ↓
+Mapper까지 그대로 전달 (SQL 검색 조건으로 사용)
+VO를 반환하는 이유 (출력):
+
+이유- 설명
+불변성- 조회된 DB 데이터를 변경하면 안 됨
+순수성- DB에서 온 데이터 그대로 신뢰 가능
+안전성- Setter 없으니 실수로 변경 불가
+
+
+
+정리하면..
+insert(UserDTO)
+=> 화면에서 온 데이터 저장
+=> Setter로 세팅된 DTO를 그대로 전달
+=> 변경 가능한 DTO가 적합!
+
+insertOauth(OAuthVO)
+=> 단순한 2개 필드만 저장
+=> DTO에서 뽑아낸 불변 객체
+=> 단순한 OAuthVO가 적합!
+
+selectByEmail(String) -> Optional<UserDTO>
+=> 존재 여부만 확인하고 버림
+=> 잠깐 쓰는 용도
+=> DTO로 충분!
+
+selectUserForLogin(UserDTO) -> Optional<UserVO>
+=> UserDTO: 검색 조건 (email + password)
+=> UserVO:  조회 결과 (DB 데이터, 불변)
+=> 입력은 DTO, 출력은 신뢰할 수 있는 VO!
+
+
+요약:
+DTO 받기  = 화면에서 온 데이터 (입력용, 변경 가능)
+VO  반환  = DB에서 조회한 데이터 (출력용, 불변, 신뢰 가능)
